@@ -1,0 +1,49 @@
+flowchart
+  %% sg3
+  subgraph " "
+    direction TB
+    o2b --> P7 --> P8 --> O1 --> P9 --> E
+  end
+
+  %% sg2
+  subgraph " "
+    direction TB
+    o1b --> P4 --> P5 --> C1
+    C1 --"N"--> P4
+    C1 --"Y"--> P6 --> C2
+    C2 --"N"--> P10 --> P4
+    C2 --"Y"--> o2a
+  end
+
+  %% sg1
+  subgraph " "
+    direction TB
+    B --> I1 --> P1 --> P2 --> P3 --> o1a
+  end
+
+  %% elements
+  B(["Begin"])
+  I1[/"Student ID 28726019 as seed"/]
+  P1["Open 26j76, select seed, screenshot data names and links"]
+  P2["Open 10 links in new tabs, confirm post titles g40s1 ... g58s1"]
+  P3["Set i = 1 (first dataset)"]
+  P4["Pick PEAK-ID = max y, LAST-ID = last x, LINI/LINF = 25% and 75% of y_peak"]
+  P5["Click load, edit ids, click read"]
+  C1{"Points correct in chart?"}
+  P6["Click calc, record peak, last, m, b, R²"]
+  C2{"i = 10?"}
+  P7["Tabulate peak, last, m, b vs g"]
+  P8["Plot xy-scatter vs g"]
+  O1[/"Table and charts"/]
+  P9["Interpret x, y, g and write answer sheet, save as PDF"]
+  E(["End"])
+  P10["i = i + 1 (next dataset)"]
+
+  %% connectors
+  o1a(("1")):::conn
+  o1b(("1")):::conn
+  o2a(("2")):::conn
+  o2b(("2")):::conn
+
+  %% classes
+  classDef conn fill:#484, stroke:#040, color:#fff

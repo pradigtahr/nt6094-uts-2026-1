@@ -1,0 +1,7 @@
+# lecturer instruction printout and raw lecturer data (published at endap.github.io, all rights reserved)
+2026-1 midterm-datasets _ endap.pdf
+data/datasets.json
+web/
+# Office temp files
+~$*
+__pycache__/
