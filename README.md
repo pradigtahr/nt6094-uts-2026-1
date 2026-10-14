@@ -9,6 +9,7 @@ g48s2, g50s3, g52s3, g54s4, g56s3, g58s1).
 
 | File | Description |
 |---|---|
+| [`UTS-NT6094-PradigtaHR-28726019-midterm.pdf`](UTS-NT6094-PradigtaHR-28726019-midterm.pdf) | **Submitted version**: course answer-sheet header (ITB logo, midterm schedule) with the JMS-structured content |
 | [`UTS-NT6094-PradigtaHR-28726019-JMS.pdf`](UTS-NT6094-PradigtaHR-28726019-JMS.pdf) | Manuscript in *Journal of Materials Science* submission format (with Online Resource 1) |
 | [`UTS-NT6094-PradigtaHR-28726019.pdf`](UTS-NT6094-PradigtaHR-28726019.pdf) | Same work as a free-format report |
 | `*.docx` | Word sources of both PDFs |
@@ -40,6 +41,7 @@ py scripts/plot_results.py                         # charts for the free-format 
 py scripts/plot_jms.py                             # charts for the JMS manuscript
 py scripts/build_docx.py                           # free-format DOCX
 py scripts/build_jms_docx.py                       # JMS-format DOCX
+py scripts/build_jms_docx.py --midterm             # same content with the course answer-sheet header
 powershell -File scripts/to_pdf.ps1 -In <docx> -Out <pdf>   # PDF via Microsoft Word
 ```
 

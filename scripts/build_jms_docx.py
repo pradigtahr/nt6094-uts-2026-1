@@ -4,7 +4,7 @@ Follows https://link.springer.com/journal/10853/submission-guidelines: title pag
 (150-250 words), 4-6 keywords, decimal headings, Word equations, "Fig. n" captions, numbered references
 in citation order, Statements and Declarations, Online Resource (ESM) appended.
 """
-import json, os, re
+import json, os, re, sys
 from docx import Document
 from docx.shared import Pt, Cm, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_TAB_ALIGNMENT, WD_BREAK
@@ -17,8 +17,10 @@ FIG = os.path.join(ROOT, "figures")
 R = json.load(open(os.path.join(ROOT, "data", "results.json")))
 D = json.load(open(os.path.join(ROOT, "data", "datasets.json")))
 KEYS = sorted(R, key=lambda k: int(k[1:3]))
-OUT = os.path.join(ROOT, "UTS-NT6094-PradigtaHR-28726019-JMS.docx")
-FONT = "Times New Roman"
+# --midterm: same JMS content, laid out with the course answer-sheet header (06_midterm_nt6094.pdf)
+MIDTERM = "--midterm" in sys.argv
+OUT = os.path.join(ROOT, "UTS-NT6094-PradigtaHR-28726019-" + ("midterm" if MIDTERM else "JMS") + ".docx")
+FONT = "Aptos" if MIDTERM else "Times New Roman"
 TEXT_W = 16.0  # cm, A4 with 2.5 cm margins
 
 doc = Document()
@@ -243,8 +245,41 @@ def equation(omml, label):
 
 # ================================================================== TITLE PAGE
 r40, r44, r58 = R["g40s1"], R["g44s3"], R["g58s1"]
-para("Original research article — Journal of Materials Science (manuscript)", align=WD_ALIGN_PARAGRAPH.LEFT,
-     size=10, after=12)
+if MIDTERM:
+    # course header: ITB logo left, course / Midterm / schedule right (as in 06_midterm_nt6094.pdf)
+    hdr = doc.add_table(rows=1, cols=2)
+    lc, rc = hdr.rows[0].cells
+    lc.width, rc.width = Cm(4.3), Cm(11.7)
+    lp = lc.paragraphs[0]
+    lp.paragraph_format.line_spacing = 1.0
+    lp.add_run().add_picture(os.path.join(FIG, "itb_logo.png"), width=Cm(3.9))
+    for i, (txt, size, after) in enumerate([("NT6094 Scientific Journal Writing", 16, 0), ("Midterm", 26, 2),
+                                            ("Wd, 14 Oct 2026 | 9310 | 09:00–11:00 (2 hours)", 14, 3),
+                                            ("Note: Open book, internet, discussion", 12, 0),
+                                            ("Platform: Edunex, GitHub", 12, 0)]):
+        q = rc.paragraphs[0] if i == 0 else rc.add_paragraph()
+        q.paragraph_format.line_spacing = 1.0
+        q.paragraph_format.space_after = Pt(after)
+        r = q.add_run(txt); r.bold = True; r.font.size = Pt(size)
+    rc.paragraphs[0].paragraph_format.space_before = Pt(10)
+    para("Refer to https://github.com/dudung/26h67/issues/62 for the instructions.",
+         align=WD_ALIGN_PARAGRAPH.LEFT, size=12, after=6, italic_vars=False).paragraph_format.space_before = Pt(10)
+    idt = doc.add_table(rows=4, cols=2)
+    idt.style = "Table Grid"
+    for i, (k, v) in enumerate([("Name", "Pradigta Hisyam Ramadhan"), ("Student ID", "28726019"),
+                                ("Midterm date", "Wednesday, 14 October 2026"),
+                                ("Seed / datasets", "28726019 → g40s1, g42s3, g44s3, g46s4, g48s2, g50s3, g52s3, "
+                                                    "g54s4, g56s3, g58s1")]):
+        idt.rows[i].cells[0].width, idt.rows[i].cells[1].width = Cm(3.6), Cm(12.4)
+        for j, txt in enumerate((k, v)):
+            q = idt.rows[i].cells[j].paragraphs[0]
+            q.paragraph_format.line_spacing = 1.1
+            q.paragraph_format.space_after = Pt(2)
+            add_runs(q, txt, bold=(j == 0), size=11)
+    doc.add_paragraph().paragraph_format.space_after = Pt(4)
+else:
+    para("Original research article — Journal of Materials Science (manuscript)", align=WD_ALIGN_PARAGRAPH.LEFT,
+         size=10, after=12)
 para("Composition dependence of peak load and stiffness extracted from ten compression-test curves",
      align=WD_ALIGN_PARAGRAPH.LEFT, size=16, bold=True, after=12, spacing=1.15, italic_vars=False)
 para("Pradigta Hisyam Ramadhan^{1,*}", align=WD_ALIGN_PARAGRAPH.LEFT, size=12, after=8, italic_vars=False)
@@ -257,6 +292,9 @@ info = [("Student ID (NIM)", "28726019"),
         ("Course", "NT6094 Teknik Penulisan Jurnal Ilmiah, 2026-1 midterm examination (UTS)"),
         ("Seed and datasets", "28726019 → g40s1, g42s3, g44s3, g46s4, g48s2, g50s3, g52s3, g54s4, g56s3, g58s1"),
         ("Template", "Journal of Materials Science submission guidelines (Springer Nature)")]
+if MIDTERM:
+    info = [("Format", "Course answer sheet (06_midterm_nt6094) with content structured after the Journal of "
+                       "Materials Science submission guidelines (Springer Nature)")]
 t = doc.add_table(rows=len(info), cols=2)
 for i, (k, v) in enumerate(info):
     t.rows[i].cells[0].width, t.rows[i].cells[1].width = Cm(4.2), Cm(11.8)

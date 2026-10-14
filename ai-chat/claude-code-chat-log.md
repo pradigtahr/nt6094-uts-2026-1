@@ -684,10 +684,119 @@ Export chat beres. Sekarang perbarui sitasi AI (dan pernyataan Data availability
 
 Sitasi sudah terbarui di kedua PDF. Sekarang menyiapkan README dan isi repo, lalu push ke GitHub.
 
-<details><summary>Actions performed (2)</summary>
+<details><summary>Actions performed (3)</summary>
 
 - write file: README.md
 - shell: Add gitignore, init repo, stage files
+- shell: Commit, create public GitHub repo and push
+
+</details>
+
+**Claude:**
+
+Verifikasi repo bisa diakses tanpa login dan link chat log dari sitasi berfungsi:
+
+<details><summary>Actions performed (2)</summary>
+
+- shell: Check public access to repo and cited links
+- shell: Record repo in project memory
+
+</details>
+
+**Claude:**
+
+Repo GitHub sudah jadi dan bisa dibuka tanpa login: **https://github.com/pradigtahr/nt6094-uts-2026-1**. Saya cek tiga link, yaitu halaman repo, log chat, dan PDF JMS; semuanya terbuka (HTTP 200).
+
+**Soal akses:** GitHub tidak punya pilihan "hanya lewat link". Sesuai pilihanmu, repo ini public, jadi orang lain juga bisa menemukannya lewat profilmu atau pencarian GitHub.
+
+**Export chat:** `ai-chat/claude-code-chat-log.md`
+- Isinya hanya yang relevan: 6 prompt kamu, balasan saya yang terlihat, jawabanmu atas pertanyaan klarifikasi, dan daftar singkat tindakan saya di tiap giliran (unduh data, jalankan app, buat grafik, dst.).
+- Yang dibuang: proses berpikir internal, output mentah perintah, screenshot, dan teks sistem.
+- Export ini adalah snapshot sampai sebelum balasan terakhir ini. Kalau mau diperbarui nanti, jalankan `py scripts/export_chat.py`, lalu commit dan push lagi.
+
+**Sitasi AI sudah diperbarui** di kedua versi (JMS dan versi lama), dan PDF-nya sudah dibuat ulang:
+- Referensi no. 11 sekarang berbentuk: *Anthropic, Claude Code (model Claude Opus 5.5), chat log "NT6094 midterm (UTS) 2026-1: processing the datasets of seed 28726019" (2026). https://github.com/pradigtahr/nt6094-uts-2026-1/blob/main/ai-chat/claude-code-chat-log.md. Accessed 14 Oct 2026*
+- Bagian Data availability di versi JMS kini menunjuk ke repo ini.
+- Deklarasi AI menyebut bahwa AI juga dipakai untuk menyiapkan repo dan export chat.
+
+**Isi repo:** kedua PDF dan DOCX, `data/results.json`, semua gambar, skrip, README, dan log chat. Sengaja tidak saya unggah: PDF instruksi dosen dan data mentah endap, karena halaman dosen bertanda "All rights reserved". README menjelaskan cara mengunduh ulang data itu dari endap.
+
+**Masih perlu kamu lakukan:** unggah PDF (pilih satu versi) ke GitHub issue UTS, cantumkan link repo di sana bila perlu, dan pastikan sebelum deadline.
+
+## Prompt 7
+
+> buatkan teks komentar untuk GitHub issue UTS
+
+**Claude:**
+
+Berikut teks siap tempel dalam bahasa Inggris, mengikuti bahasa instruksi UTS:
+
+```markdown
+**Midterm (UTS) 2026-1 — Pradigta Hisyam Ramadhan (28726019)**
+
+- Seed: 28726019 → datasets g40s1, g42s3, g44s3, g46s4, g48s2, g50s3, g52s3, g54s4, g56s3, g58s1
+- Answer sheet (PDF, *Journal of Materials Science* submission format): attached below
+- Repository (answer sheet, results, figures, scripts): https://github.com/pradigtahr/nt6094-uts-2026-1
+- AI chat log (Claude Code, Claude Opus 5.5): https://github.com/pradigtahr/nt6094-uts-2026-1/blob/main/ai-chat/claude-code-chat-log.md
+
+Summary: peak, last point, and the linear-region regression y = mx + b (25–75 % of the peak y, all R² ≥ 0.987) were extracted from the ten datasets. Both the peak y and the slope m fall strongly as g increases (about 25–28 % per Δg = 2).
+```
+
+Cara pakai:
+1. Tempel teks di kolom komentar GitHub issue UTS.
+2. Seret file `UTS-NT6094-PradigtaHR-28726019-JMS.pdf` ke kolom komentar yang sama. GitHub akan menyisipkan link PDF otomatis; letakkan di bawah baris "attached below".
+3. Klik **Preview** untuk mengecek tampilannya, lalu **Comment**.
+
+Kalau yang kamu kumpulkan versi format bebas, ganti nama file di langkah 2 dan hapus teks *Journal of Materials Science submission format*.
+
+## Prompt 8
+
+> Tolong ubah formatnya lagi pakai ini:"D:\b-master-program\NT6094-Teknik Penulisan Jurnal Ilmiah\Tugas8-UTS\06_midterm_nt6094.pdf". tapi kontennya samakan dengan yang JMS
+
+<details><summary>Actions performed (3)</summary>
+
+- shell: Read the new format template PDF
+- shell: Extract text, fonts and render the template page
+- read file: tmpl.png
+
+</details>
+
+**Claude:**
+
+Template ini adalah kop lembar ujian: logo ITB, nama mata kuliah, "Midterm", tanggal/ruang/jam. Saya cek dulu font, gambar logo, dan instruksi di GitHub issue yang dirujuk.
+
+<details><summary>Actions performed (4)</summary>
+
+- shell: Check Aptos font, extract template images, read issue
+- shell: Locate title-page and font code in JMS script
+- read file: build_jms_docx.py
+- read file: build_jms_docx.py
+
+</details>
+
+## Prompt 9
+
+> https://github.com/dudung/26h67/issues/62
+
+<details><summary>Actions performed (5)</summary>
+
+- shell: Add midterm-header mode and build both variants
+- shell: Export midterm and JMS DOCX to PDF
+- shell: Render midterm PDF previews and list fonts
+- read file: m1.png
+- read file: msheet.png
+
+</details>
+
+**Claude:**
+
+Kop sudah mirip template, tapi logo punya latar hitam karena transparansinya hilang. Saya beri latar putih:
+
+<details><summary>Actions performed (3)</summary>
+
+- shell: Rebuild logo on white background and rebuild DOCX
+- shell: Export PDF and render header area
+- read file: mhead.png
 
 </details>
 
